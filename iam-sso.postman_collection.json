@@ -1,0 +1,395 @@
+{
+	"info": {
+		"_postman_id": "ab350cd0-a394-455f-932a-5ebf1478e27c",
+		"name": "iam-sso",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "oauth2",
+			"item": [
+				{
+					"name": "授权",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/oauth/authorize?response_type=code&client_id=app-1&state=xyz&redirect_uri=https://www.baidu.com?wq=apisix&scope=all",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"authorize"
+							],
+							"query": [
+								{
+									"key": "response_type",
+									"value": "code"
+								},
+								{
+									"key": "client_id",
+									"value": "app-1"
+								},
+								{
+									"key": "state",
+									"value": "xyz"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https://www.baidu.com?wq=apisix"
+								},
+								{
+									"key": "scope",
+									"value": "all"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "授权码模式",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "app-1",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/oauth/token?grant_type=authorization_code&code=ZsgwB3&redirect_uri=https://www.baidu.com?wq=apisix",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"token"
+							],
+							"query": [
+								{
+									"key": "grant_type",
+									"value": "authorization_code"
+								},
+								{
+									"key": "code",
+									"value": "ZsgwB3"
+								},
+								{
+									"key": "scope",
+									"value": "all",
+									"disabled": true
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https://www.baidu.com?wq=apisix"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "密码模式",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "app-1",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/oauth/token?username=yl&password=123&grant_type=password&scope=all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"token"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "yl"
+								},
+								{
+									"key": "password",
+									"value": "123"
+								},
+								{
+									"key": "grant_type",
+									"value": "password"
+								},
+								{
+									"key": "scope",
+									"value": "all",
+									"description": "不需要传 scope"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "客户端模式",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/oauth/token?grant_type=client_credentials&scope=all&client_id=app-1&client_secret=1234561",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"token"
+							],
+							"query": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials"
+								},
+								{
+									"key": "scope",
+									"value": "all",
+									"description": "不需要传 scope"
+								},
+								{
+									"key": "client_id",
+									"value": "app-1"
+								},
+								{
+									"key": "client_secret",
+									"value": "1234561"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "刷新 Token",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "app-1",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/oauth/token?scope=all&grant_type=refresh_token&refresh_token=1f24341d-f01f-4108-9a07-3f4070d5f219",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"token"
+							],
+							"query": [
+								{
+									"key": "scope",
+									"value": "all",
+									"description": "不需要传 scope"
+								},
+								{
+									"key": "grant_type",
+									"value": "refresh_token"
+								},
+								{
+									"key": "refresh_token",
+									"value": "1f24341d-f01f-4108-9a07-3f4070d5f219"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check_token",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "app-1",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/oauth/check_token?token=dc4c9e29-a690-49fc-af5c-36f5fd76b87d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"check_token"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "dc4c9e29-a690-49fc-af5c-36f5fd76b87d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "token_key",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "app-1",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/oauth/token_key",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"token_key"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "resource-server",
+			"item": [
+				{
+					"name": "me",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8081/user/me?access_token=a689b8e7-fc3d-4fc9-9cae-4259c0bb0af3",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8081",
+							"path": [
+								"user",
+								"me"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "a689b8e7-fc3d-4fc9-9cae-4259c0bb0af3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8081/user/info?access_token=a689b8e7-fc3d-4fc9-9cae-4259c0bb0af3",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8081",
+							"path": [
+								"user",
+								"info"
+							],
+							"query": [
+								{
+									"key": "access_token",
+									"value": "a689b8e7-fc3d-4fc9-9cae-4259c0bb0af3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
