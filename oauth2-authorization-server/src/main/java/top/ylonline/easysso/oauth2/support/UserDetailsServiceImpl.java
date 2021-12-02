@@ -1,4 +1,4 @@
-package top.ylonline.iamsso.oauth2.support;
+package top.ylonline.easysso.oauth2.support;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package top.ylonline.iamsso.user.config;
+package top.ylonline.easysso.user.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

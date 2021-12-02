@@ -1,4 +1,4 @@
-package top.ylonline.iamsso.oauth2;
+package top.ylonline.easysso.user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,13 +9,13 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
  * @author yl
  */
 @SpringBootApplication
-public class AuthorizationServerApp extends SpringBootServletInitializer {
+public class ResourceServerApp extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(AuthorizationServerApp.class);
+        return application.sources(ResourceServerApp.class);
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(AuthorizationServerApp.class, args);
+        SpringApplication.run(ResourceServerApp.class, args);
     }
 }

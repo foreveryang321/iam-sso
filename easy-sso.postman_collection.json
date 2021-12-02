@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "ab350cd0-a394-455f-932a-5ebf1478e27c",
-		"name": "iam-sso",
+		"name": "easy-sso",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -14,7 +14,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8080/oauth/authorize?response_type=code&client_id=app-1&state=xyz&redirect_uri=https://www.baidu.com?wq=apisix&scope=all",
+							"raw": "http://localhost:8080/oauth/authorize?response_type=code&client_id=app-1&state=xyz&redirect_uri=https://www.baidu.com?wq=apisix&scope=all",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -337,7 +337,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8081/user/me?access_token=a689b8e7-fc3d-4fc9-9cae-4259c0bb0af3",
+							"raw": "http://localhost:8081/user/me?access_token=a689b8e7-fc3d-4fc9-9cae-4259c0bb0af3",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -366,7 +366,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8081/user/info?access_token=a689b8e7-fc3d-4fc9-9cae-4259c0bb0af3",
+							"raw": "http://localhost:8081/user/info?access_token=a689b8e7-fc3d-4fc9-9cae-4259c0bb0af3",
 							"protocol": "http",
 							"host": [
 								"127",

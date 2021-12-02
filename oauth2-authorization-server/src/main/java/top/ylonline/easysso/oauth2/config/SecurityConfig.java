@@ -1,4 +1,4 @@
-package top.ylonline.iamsso.oauth2.config;
+package top.ylonline.easysso.oauth2.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
