@@ -13,6 +13,7 @@
     <modules>
         <module>oauth2-authorization-server</module>
         <module>user-resource-server</module>
+        <module>easy-security-core</module>
     </modules>
 
     <properties>
