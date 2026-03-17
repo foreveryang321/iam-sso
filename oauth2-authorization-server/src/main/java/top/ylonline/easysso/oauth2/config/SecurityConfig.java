@@ -46,7 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .antMatchers(
                                 OAUTH_ENDPOINT + "/**",
                                 LOGIN_PAGE + "/**",
-                                LOGIN_FAIL + "/**"
+                                LOGIN_FAIL + "/**",
+                                "/h2-console/**"
                         ).permitAll()
                         // 需要放行静态资源
                         .antMatchers(
@@ -58,7 +59,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 "/**/*.eot",
                                 "/**/*.svg",
                                 "/**/*.tff",
-                                "/**/*.woff"
+                                "/**/*.woff",
+                                "/favicon.ico"
                         ).permitAll()
                         // 如果 spring.mvc.servlet.path 配置了，antMatchers、mvcMatchers 需要加上该配置
                         // .antMatchers("${spring.mvc.servlet.path}/**/*.js").permitAll()
@@ -139,10 +141,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // encoders.put("plain", NoOpPasswordEncoder.getInstance());
         encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
         encoders.put("scrypt", new SCryptPasswordEncoder());
-        //md
+        // md
         // encoders.put("md4", new Md4PasswordEncoder());
         // encoders.put("md5", new MessageDigestPasswordEncoder("MD5"));
-        //sha
+        // sha
         // encoders.put("sha1", new StandardPasswordEncoder("SHA-1", ""));
         // encoders.put("sha256", new StandardPasswordEncoder());
         // encoders.put("sha384", new StandardPasswordEncoder("SHA-384", ""));
@@ -152,7 +154,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // encoders.put("ldap", new LdapShaPasswordEncoder());
 
-        //idForEncode is default for encoder
+        // idForEncode is default for encoder
         DelegatingPasswordEncoder delegating = new DelegatingPasswordEncoder(bcrypt, encoders);
         // 如果都不匹配以上加密方式，则使用默认方式
         delegating.setDefaultPasswordEncoderForMatches(encoder);

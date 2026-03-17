@@ -14,7 +14,7 @@
 ## 账号信息
 
 - 登录账号密码：yl/123
-- 应用信息：client_id=app-1，client_secret=123456，redirect_uri=https://www.baidu.com
+- 应用信息：client_id=app-1，client_secret=123456，redirect_uri=http://127.0.0.1:8848
 - Authorization 要加在请求头中，格式为 Basic base64(client_id:client_secret)，即 Base64 编码
 
 ## 获取 Token
@@ -24,14 +24,16 @@
 #### 授权
 
 ```shell
-GET http://localhost:8080/oauth/authorize?response_type=code&client_id=app-1&state=xyz&redirect_uri=https://www.baidu.com?wq=apisix&scope=all
+GET http://localhost:8080/oauth/authorize?response_type=code&client_id=app-1&state=xyz&redirect_uri=http://127.0.0.1:8848?wq=apisix&scope=all
 ```
 
 #### 通过 code 获取 Token
 
 ```shell
 # scope 参数可以选
-POST http://localhost:8080/oauth/token?grant_type=authorization_code&code=ma38G8&redirect_uri=https://www.baidu.com?wq=apisix&scope=all
+curl -H 'Authorization: Basic YXBwLTE6MTIzNDU2' -XPOST 'http://localhost:8080/oauth/token?grant_type=authorization_code&code=Xh1o9J&redirect_uri=http://127.0.0.1:8848?wq=apisix&scope=all'
+ 
+POST http://localhost:8080/oauth/token?grant_type=authorization_code&code=Xh1o9J&redirect_uri=http://127.0.0.1:8848?wq=apisix&scope=all
 Authorization: Basic YXBwLTE6MTIzNDU2
 ```
 
@@ -171,22 +173,22 @@ Authorization: Basic YXBwLTE6MTIzNDU2
 // 优先级：方法一 > 方法二
 // 方法一：org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter#configure(HttpSecurity http)
 @Override
-public void configure(HttpSecurity http)throws Exception{
-        http.exceptionHandling()
-        .accessDeniedHandler((request,response,accessDeniedException)->{
-        response.setContentType("application/json; charset=utf-8");
-        response.getWriter().println("{\"code\": -1, \"msg\": \"没有访问权限\"}");
-        });
-        }
+public void configure(HttpSecurity http) throws Exception {
+    http.exceptionHandling()
+            .accessDeniedHandler((request, response, accessDeniedException) -> {
+                response.setContentType("application/json; charset=utf-8");
+                response.getWriter().println("{\"code\": -1, \"msg\": \"没有访问权限\"}");
+            });
+}
 
 // 方法二：org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter#configure(ResourceServerSecurityConfigurer resources)
 @Override
-public void configure(ResourceServerSecurityConfigurer resources)throws Exception{
-        resources.accessDeniedHandler((request,response,accessDeniedException)->{
+public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+    resources.accessDeniedHandler((request, response, accessDeniedException) -> {
         response.setContentType("application/json; charset=utf-8");
         response.getWriter().println("{\"code\": -1, \"msg\": \"resources 没有访问权限\"}");
-        });
-        }
+    });
+}
 ```
 
 ### invalid_token
@@ -203,26 +205,26 @@ public void configure(ResourceServerSecurityConfigurer resources)throws Exceptio
 // 这种方式不生效，未看源码找原因
 // org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter#configure(HttpSecurity http)
 @Override
-public void configure(HttpSecurity http)throws Exception{
-        OAuth2AuthenticationEntryPoint entryPoint=new OAuth2AuthenticationEntryPoint();
-        // 方法一：异常转换器
-        entryPoint.setExceptionTranslator(xxx);
-        // 方法二：_异常渲染器
-        entryPoint_.setExceptionRenderer(xxx);
-        resources.authenticationEntryPoint(entryPoint);
-        }
+public void configure(HttpSecurity http) throws Exception {
+    OAuth2AuthenticationEntryPoint entryPoint = new OAuth2AuthenticationEntryPoint();
+    // 方法一：异常转换器
+    entryPoint.setExceptionTranslator(xxx);
+    // 方法二：_异常渲染器
+    entryPoint_.setExceptionRenderer(xxx);
+    resources.authenticationEntryPoint(entryPoint);
+}
 
 // 这种方式生效
 // org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter#configure(ResourceServerSecurityConfigurer resources)
 @Override
-public void configure(ResourceServerSecurityConfigurer resources)throws Exception{
-        OAuth2AuthenticationEntryPoint entryPoint=new OAuth2AuthenticationEntryPoint();
-        // 方法一：异常转换器
-        entryPoint.setExceptionTranslator(xxx);
-        // 方法二：异常渲染器
-        entryPoint.setExceptionRenderer(xxx);
-        resources.authenticationEntryPoint(entryPoint);
-        }
+public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+    OAuth2AuthenticationEntryPoint entryPoint = new OAuth2AuthenticationEntryPoint();
+    // 方法一：异常转换器
+    entryPoint.setExceptionTranslator(xxx);
+    // 方法二：异常渲染器
+    entryPoint.setExceptionRenderer(xxx);
+    resources.authenticationEntryPoint(entryPoint);
+}
 ```
 
 ### invalid_scope

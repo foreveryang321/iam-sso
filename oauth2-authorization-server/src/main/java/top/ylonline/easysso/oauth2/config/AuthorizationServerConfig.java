@@ -18,6 +18,8 @@ import org.springframework.security.oauth2.provider.approval.InMemoryApprovalSto
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
+import javax.sql.DataSource;
+
 /**
  * @author yl
  */
@@ -29,8 +31,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
-    // private final ClientDetailsService clientDetailsService;
-    // private final DataSource dataSource;
+    private final DataSource dataSource;
 
     // /**
     //  * 客户端信息来源
@@ -52,12 +53,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Bean
     public TokenStore tokenStore() {
+        System.out.println("123456 ---> " + passwordEncoder.encode("123456"));
+        System.out.println("123 ---> " + passwordEncoder.encode("123"));
         // return new RedisTokenStore(redisConnectionFactory);
         // return new JdbcTokenStore(dataSource);
         // return new JwtTokenStore(jwtAccessTokenConverter());
         return new InMemoryTokenStore();
     }
-
 
     /**
      * 授权信息保存策略
@@ -101,7 +103,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         /*
          * 允许客户端访问 OAuth2 授权接口，否则请求 token 会返回 401
-         * 允许表单认证，如果配置支持allowFormAuthenticationForClients，且url中有client_id和client_secret的会走ClientCredentialsTokenEndpointFilter来保护
+         * 允许表单认证，如果配置支持allowFormAuthenticationForClients，且url中有client_id和client_secret
+         * 的会走ClientCredentialsTokenEndpointFilter来保护
          * 如果没有支持allowFormAuthenticationForClients或者有支持但是url中没有client_id和client_secret的，走basic认证保护
          */
         security.allowFormAuthenticationForClients();
@@ -114,24 +117,26 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         // clients.withClientDetails(clientDetailsService);
+        clients.jdbc(dataSource);
         // 配置两个客户端,一个用于password认证一个用于client认证
-        clients.inMemory()
-                .withClient("app-1")
-                .secret(passwordEncoder.encode("123456"))
-                // 是否自动授权
-                .autoApprove(true)
-                .scopes("all")
-                // .scopes("read")
-                // .scopes("select", "read", "write", "trust", "openid")
-                // .authorities("user:info", "ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
-                // .resourceIds("user")
-                .authorizedGrantTypes("password", "client_credentials", "authorization_code", "refresh_token", "check_token")
-                // access_token 失效时间，单位：秒
-                .accessTokenValiditySeconds(7200)
-                // refresh_token 失效时间，单位：秒
-                .refreshTokenValiditySeconds(7200)
-                .redirectUris("https://www.baidu.com")
-        ;
+        // clients.inMemory()
+        //         .withClient("app-1")
+        //         .secret(passwordEncoder.encode("123456"))
+        //         // 是否自动授权
+        //         .autoApprove(true)
+        //         .scopes("all")
+        //         // .scopes("read")
+        //         // .scopes("select", "read", "write", "trust", "openid")
+        //         // .authorities("user:info", "ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
+        //         // .resourceIds("user")
+        //         .authorizedGrantTypes("password", "client_credentials", "authorization_code", "refresh_token",
+        //                 "check_token")
+        //         // access_token 失效时间，单位：秒
+        //         .accessTokenValiditySeconds(7200)
+        //         // refresh_token 失效时间，单位：秒
+        //         .refreshTokenValiditySeconds(7200)
+        //         .redirectUris("https://www.baidu.com")
+        // ;
     }
 
     /**
